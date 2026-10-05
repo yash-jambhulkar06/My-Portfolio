@@ -18,14 +18,14 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yashjambhulkar.netlify.app/">
 <meta property="og:title" content="Yash Dhanraj Jambhulkar | Full Stack Python Developer">
-<meta property="og:description" content="Full Stack Python Developer building practical web applications with Django, MySQL, JavaScript and AI APIs.">
+<meta property="og:description" content="Portfolio of Yash Dhanraj Jambhulkar — Full Stack Python Developer building practical web applications with Django, MySQL, JavaScript, and AI APIs.">
 <meta property="og:site_name" content="Yash Dhanraj Jambhulkar Portfolio">
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://yashjambhulkar.netlify.app/">
 <meta name="twitter:title" content="Yash Dhanraj Jambhulkar | Full Stack Python Developer">
-<meta name="twitter:description" content="Full Stack Python Developer building practical web applications with Django, MySQL, JavaScript and AI APIs.">
+<meta name="twitter:description" content="Portfolio of Yash Dhanraj Jambhulkar — Full Stack Python Developer building practical web applications with Django, MySQL, JavaScript, and AI APIs.">
 
 <!-- Structured Data (Schema.org) -->
 <script type="application/ld+json">
@@ -203,19 +203,28 @@ document.documentElement.classList.add("js");
         <div class="hero-content">
 
             <div class="availability">
-                <span class="availability-dot"></span>
-                Building & learning
+                <span class="availability-dot-wrap">
+                    <span class="availability-ping"></span>
+                    <span class="availability-dot"></span>
+                </span>
+                <span>Available for Internships & Projects</span>
             </div>
 
             <h1>
                 Yash Dhanraj
-                <span class="accent">Jambhulkar</span>
+                <span class="name-gradient">Jambhulkar</span>
             </h1>
+
+            <div class="hero-roles">
+                <span class="role-pill">Full Stack Python</span>
+                <span class="role-pill">Django Specialist</span>
+                <span class="role-pill">AI Integrator</span>
+            </div>
 
             <p class="hero-description">
                 <strong>Full Stack Python Developer</strong>
                 and Diploma in Computer Technology student building
-                practical web applications with
+                practical, production-ready web applications with
                 <strong>Django, MySQL, JavaScript and AI APIs.</strong>
             </p>
 
@@ -377,14 +386,27 @@ document.documentElement.classList.add("js");
                 <span class="terminal-dot yellow"></span>
                 <span class="terminal-dot green"></span>
 
-                <span class="terminal-title">
-                    yash@developer: ~/portfolio
+                <div class="terminal-tabs">
+                    <span class="terminal-tab active">terminal.py</span>
+                    <span class="terminal-tab">bash</span>
+                </div>
+
+                <span class="terminal-title" style="margin-left: auto;">
+                    Python 3.12 (venv)
                 </span>
 
             </div>
 
             <div class="terminal-body"
                  id="terminalBody">
+            </div>
+
+            <div class="terminal-status-bar">
+                <div class="terminal-status-left">
+                    <span class="terminal-status-indicator"></span>
+                    <span>Interactive CLI Mode</span>
+                </div>
+                <span>UTF-8 | Git: main</span>
             </div>
 
         </div>
@@ -420,18 +442,18 @@ document.documentElement.classList.add("js");
                 <p class="about-main">
                     I'm Yash, a
                     <strong>Full Stack Python Developer</strong>
-                    who enjoys turning ideas into useful web applications.
+                    who enjoys turning ideas into impactful web applications.
                     <span>
-                        I work across backend logic, databases,
-                        frontend interfaces and AI integrations —
-                        while continuously learning through real projects.
+                        I engineer reliable backend systems with Django & MySQL,
+                        build sleek interfaces with JavaScript, and supercharge
+                        everyday workflows with modern AI APIs.
                     </span>
                 </p>
 
                 <p class="about-note">
-                    My current focus is building practical applications
-                    with Django and exploring how AI can make everyday
-                    software more useful and intelligent.
+                    My current focus is building practical SaaS applications,
+                    optimizing relational database architectures, and integrating
+                    fast LLM inference pipelines with Groq API.
                 </p>
 
             </div>
@@ -440,18 +462,18 @@ document.documentElement.classList.add("js");
             <div class="info-cards">
 
                 <div class="info-card reveal delay-1">
-                    <span class="info-label">Backend</span>
+                    <span class="info-label">Backend Architecture</span>
                     <strong>Python + Django</strong>
                 </div>
 
                 <div class="info-card reveal delay-2">
-                    <span class="info-label">Database</span>
-                    <strong>MySQL</strong>
+                    <span class="info-label">Database & ORM</span>
+                    <strong>MySQL + Relational Schemas</strong>
                 </div>
 
                 <div class="info-card reveal delay-3">
-                    <span class="info-label">AI</span>
-                    <strong>Groq API</strong>
+                    <span class="info-label">AI Integration</span>
+                    <strong>Groq API (LLaMA Inference)</strong>
                 </div>
 
             </div>
@@ -475,75 +497,97 @@ document.documentElement.classList.add("js");
 
             <span class="section-number">02</span>
 
-            <h2>Skills</h2>
+            <h2>Technical Skills</h2>
 
             <span class="section-line"></span>
 
         </div>
 
 
-        <div class="skills-grid">
+        <div class="skills-category-wrap">
 
-            <div class="skill-group reveal">
-
-                <h3>Languages</h3>
-
-                <div class="skill-list">
-
-                    <span class="skill">Python</span>
-                    <span class="skill">C</span>
-                    <span class="skill">JavaScript</span>
-
+            <!-- Languages -->
+            <div class="skill-category-card reveal">
+                <h3>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                    Languages
+                </h3>
+                <div class="skill-chips">
+                    <span class="skill-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Python
+                    </span>
+                    <span class="skill-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M14 9a4 4 0 1 0 0 6"/></svg>
+                        C Programming
+                    </span>
+                    <span class="skill-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 17h2a2 2 0 0 0 2-2V9M14 17h4"/></svg>
+                        JavaScript (ES6+)
+                    </span>
                 </div>
-
             </div>
 
-
-            <div class="skill-group reveal delay-1">
-
-                <h3>Backend</h3>
-
-                <div class="skill-list">
-
-                    <span class="skill">Django</span>
-                    <span class="skill">Python</span>
-                    <span class="skill">REST concepts</span>
-                    <span class="skill">OOP</span>
-
+            <!-- Backend -->
+            <div class="skill-category-card reveal delay-1">
+                <h3>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                        <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                        <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                        <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                    </svg>
+                    Backend & Frameworks
+                </h3>
+                <div class="skill-chips">
+                    <span class="skill-chip">Django</span>
+                    <span class="skill-chip">Django ORM</span>
+                    <span class="skill-chip">RESTful APIs</span>
+                    <span class="skill-chip">Object-Oriented Design</span>
+                    <span class="skill-chip">Authentication & Security</span>
                 </div>
-
             </div>
 
-
-            <div class="skill-group reveal delay-2">
-
-                <h3>Frontend</h3>
-
-                <div class="skill-list">
-
-                    <span class="skill">HTML</span>
-                    <span class="skill">CSS</span>
-                    <span class="skill">JavaScript</span>
-                    <span class="skill">Responsive UI</span>
-
+            <!-- Frontend -->
+            <div class="skill-category-card reveal delay-2">
+                <h3>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--yellow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                    Frontend & UI
+                </h3>
+                <div class="skill-chips">
+                    <span class="skill-chip">HTML5</span>
+                    <span class="skill-chip">CSS3 / Flexbox / Grid</span>
+                    <span class="skill-chip">Glassmorphism</span>
+                    <span class="skill-chip">Responsive Web Design</span>
+                    <span class="skill-chip">DOM Manipulation</span>
                 </div>
-
             </div>
 
-
-            <div class="skill-group reveal delay-3">
-
-                <h3>Database & Tools</h3>
-
-                <div class="skill-list">
-
-                    <span class="skill">MySQL</span>
-                    <span class="skill">Git</span>
-                    <span class="skill">GitHub</span>
-                    <span class="skill">Groq API</span>
-
+            <!-- Databases, AI & Tools -->
+            <div class="skill-category-card reveal delay-3">
+                <h3>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                    </svg>
+                    Databases, AI & Tools
+                </h3>
+                <div class="skill-chips">
+                    <span class="skill-chip">MySQL</span>
+                    <span class="skill-chip">Groq Cloud AI</span>
+                    <span class="skill-chip">LLaMA 3 API</span>
+                    <span class="skill-chip">Git</span>
+                    <span class="skill-chip">GitHub</span>
+                    <span class="skill-chip">Render & Netlify</span>
                 </div>
-
             </div>
 
         </div>
@@ -565,7 +609,7 @@ document.documentElement.classList.add("js");
 
             <span class="section-number">03</span>
 
-            <h2>Projects</h2>
+            <h2>Featured Projects</h2>
 
             <span class="section-line"></span>
 
@@ -579,17 +623,18 @@ document.documentElement.classList.add("js");
 
             <article class="project-card reveal">
 
-                <div class="project-top">
+                <div class="project-top project-image-top">
 
-                    <div class="project-grid-pattern"></div>
+                    <img src="assets/images/room_buddies_preview.jpg"
+                         alt="Room Buddies Web Platform Interface"
+                         class="project-img"
+                         loading="lazy">
+
+                    <div class="project-overlay"></div>
 
                     <div class="status">
                         <span class="status-dot"></span>
                         In development
-                    </div>
-
-                    <div class="project-logo">
-                        RB
                     </div>
 
                 </div>
@@ -604,16 +649,14 @@ document.documentElement.classList.add("js");
                     <h3>Room Buddies</h3>
 
                     <p>
-                        A platform designed to bring accommodation
-                        and everyday services together in one place,
-                        with AI-powered features to make discovery
-                        and interaction more useful.
+                        A comprehensive accommodation and lifestyle platform connecting tenants,
+                        roommates, and local amenities with intelligent recommendation features.
                     </p>
 
                     <ul class="project-highlights">
-                        <li>Multi-tenant room and roommate discovery powered by Django ORM</li>
+                        <li>Multi-tenant room and roommate matching powered by Django ORM</li>
                         <li>MySQL relational schema designed for verified listings & preferences</li>
-                        <li>Integrated Groq API for intelligent search and recommendations</li>
+                        <li>Integrated Groq API for smart discovery and conversational assistant</li>
                     </ul>
 
                     <ul class="project-tags">
@@ -636,7 +679,7 @@ document.documentElement.classList.add("js");
                             rel="noopener"
                             aria-label="View Room Buddies code on GitHub">
 
-                            GitHub
+                            GitHub Code
 
                             <svg viewBox="0 0 24 24"
                                  fill="none"
@@ -663,17 +706,18 @@ document.documentElement.classList.add("js");
 
             <article class="project-card resume reveal delay-1">
 
-                <div class="project-top">
+                <div class="project-top project-image-top">
 
-                    <div class="project-grid-pattern"></div>
+                    <img src="assets/images/resume_ai_preview.jpg"
+                         alt="Resume AI Analyzer Dashboard Interface"
+                         class="project-img"
+                         loading="lazy">
+
+                    <div class="project-overlay"></div>
 
                     <div class="status live">
                         <span class="status-dot"></span>
                         Live
-                    </div>
-
-                    <div class="project-logo">
-                        AI
                     </div>
 
                 </div>
@@ -682,20 +726,19 @@ document.documentElement.classList.add("js");
                 <div class="project-body">
 
                     <span class="project-meta">
-                        AI Web Application
+                        AI-Powered Web Application
                     </span>
 
                     <h3>Resume AI</h3>
 
                     <p>
-                        An AI-powered resume analyzer designed
-                        to help users review their resumes and
-                        understand areas that can be improved.
+                        An intelligent resume analyzer providing instant ATS compatibility scoring,
+                        role keyword gap insights, and actionable formatting critique for job seekers.
                     </p>
 
                     <ul class="project-highlights">
                         <li>Automated ATS score evaluation and role keyword gap analysis</li>
-                        <li>Groq API fast LLaMA inference for actionable resume critique</li>
+                        <li>Groq API high-throughput LLaMA inference for tailored critiques</li>
                         <li>Production deployment on Render with real-time feedback</li>
                     </ul>
 
@@ -719,7 +762,7 @@ document.documentElement.classList.add("js");
                             rel="noopener"
                             aria-label="View live demo of Resume AI">
 
-                            Live demo
+                            Live Demo
 
                             <svg viewBox="0 0 24 24"
                                  fill="none"
@@ -743,7 +786,7 @@ document.documentElement.classList.add("js");
                             rel="noopener"
                             aria-label="View Resume AI code on GitHub">
 
-                            GitHub
+                            GitHub Code
 
                         </a>
 
@@ -792,7 +835,7 @@ document.documentElement.classList.add("js");
 
             <span class="section-number">04</span>
 
-            <h2>Education</h2>
+            <h2>Education & Background</h2>
 
             <span class="section-line"></span>
 
@@ -812,9 +855,9 @@ document.documentElement.classList.add("js");
                 </h3>
 
                 <p>
-                    Building a strong foundation in programming,
-                    software development, databases, operating systems,
-                    networking and modern web technologies.
+                    Building a strong engineering foundation in algorithms,
+                    data structures, software engineering principles, databases,
+                    operating systems, and modern web application development.
                 </p>
 
             </div>
@@ -838,7 +881,7 @@ document.documentElement.classList.add("js");
 
             <span class="section-number">05</span>
 
-            <h2>Contact</h2>
+            <h2>Get in Touch</h2>
 
             <span class="section-line"></span>
 
@@ -854,7 +897,7 @@ document.documentElement.classList.add("js");
         <p class="contact-description reveal delay-1">
             Have a project idea, internship opportunity,
             collaboration or just want to say hello?
-            I'd be happy to hear from you.
+            I'd be thrilled to hear from you.
         </p>
 
 
@@ -1004,7 +1047,7 @@ document.documentElement.classList.add("js");
 
         <span>
             © <span id="year"></span>
-            Yash Dhanraj Jambhulkar
+            Yash Dhanraj Jambhulkar • Built with Python & Passion
         </span>
 
         <a href="#home">
@@ -1014,6 +1057,21 @@ document.documentElement.classList.add("js");
     </div>
 
 </footer>
+
+
+<!-- =======================================================
+     FLOATING BACK TO TOP BUTTON WITH PROGRESS RING
+======================================================= -->
+
+<button id="backToTop" class="back-to-top-btn" type="button" aria-label="Scroll back to top">
+    <svg class="progress-ring" width="48" height="48" viewBox="0 0 48 48">
+        <circle class="progress-ring-bg" cx="24" cy="24" r="18" fill="none" stroke-width="3"/>
+        <circle class="progress-ring-bar" cx="24" cy="24" r="18" fill="none" stroke-width="3"/>
+    </svg>
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"/>
+    </svg>
+</button>
 
 
 <!-- =======================================================

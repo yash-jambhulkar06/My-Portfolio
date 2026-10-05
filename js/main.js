@@ -656,6 +656,50 @@
 
 
     /* -------------------------------------------------------
+       BACK TO TOP WITH CIRCULAR SCROLL PROGRESS
+    ------------------------------------------------------- */
+
+    const backToTopBtn = document.getElementById("backToTop");
+    const progressCircle = document.querySelector(".progress-ring-bar");
+    const radius = 18;
+    const circumference = 2 * Math.PI * radius; // ~113.1
+
+    if (progressCircle) {
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+    }
+
+    function updateBackToTop() {
+        const scrollable =
+            document.documentElement.scrollHeight - window.innerHeight;
+        const scrollY = window.scrollY;
+
+        if (backToTopBtn) {
+            if (scrollY > 320) {
+                backToTopBtn.classList.add("visible");
+            } else {
+                backToTopBtn.classList.remove("visible");
+            }
+        }
+
+        if (progressCircle && scrollable > 0) {
+            const fraction = Math.min(1, Math.max(0, scrollY / scrollable));
+            const offset = circumference - fraction * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    updateBackToTop();
+
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+
+
+    /* -------------------------------------------------------
        YEAR
     ------------------------------------------------------- */
 
