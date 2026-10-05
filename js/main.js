@@ -700,6 +700,98 @@
 
 
     /* -------------------------------------------------------
+       DYNAMIC CONTENT HYDRATION (FROM DATA/PORTFOLIO.JSON OR ADMIN DRAFT)
+    ------------------------------------------------------- */
+
+    async function hydrateDynamicContent() {
+        try {
+            let data = null;
+            const draft = localStorage.getItem("portfolio_draft_data");
+            if (draft) {
+                try {
+                    data = JSON.parse(draft);
+                } catch (e) {}
+            }
+
+            if (!data) {
+                const res = await fetch("data/portfolio.json");
+                if (res.ok) data = await res.json();
+            }
+
+            if (!data || !data.profile) return;
+
+            const p = data.profile;
+
+            // Name
+            const nameEl = document.querySelector(".hero-content h1");
+            if (nameEl && p.firstName && p.lastName) {
+                nameEl.innerHTML = `${p.firstName} <span class="name-gradient">${p.lastName}</span>`;
+            }
+
+            // Availability
+            const availText = document.querySelector(".availability span:last-child");
+            if (availText && p.availabilityText) {
+                availText.textContent = p.availabilityText;
+            }
+
+            const availWrap = document.querySelector(".availability");
+            if (availWrap && p.isAvailable === false) {
+                availWrap.style.display = "none";
+            } else if (availWrap) {
+                availWrap.style.display = "inline-flex";
+            }
+
+            // Roles
+            const rolesWrap = document.querySelector(".hero-roles");
+            if (rolesWrap && p.roles && p.roles.length) {
+                rolesWrap.innerHTML = p.roles
+                    .map(r => `<span class="role-pill">${r}</span>`)
+                    .join("");
+            }
+
+            // Hero Description
+            const heroDesc = document.querySelector(".hero-description");
+            if (heroDesc && p.heroDescription) {
+                heroDesc.innerHTML = p.heroDescription;
+            }
+
+            // About Main
+            const aboutMain = document.querySelector(".about-main");
+            if (aboutMain && p.aboutMain) {
+                aboutMain.innerHTML = p.aboutMain;
+            }
+
+            // About Note
+            const aboutNote = document.querySelector(".about-note");
+            if (aboutNote && p.aboutNote) {
+                aboutNote.textContent = p.aboutNote;
+            }
+
+            // Email links
+            if (p.email) {
+                const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+                emailLinks.forEach(el => {
+                    el.setAttribute("href", `mailto:${p.email}`);
+                    if (el.classList.contains("email")) {
+                        el.textContent = p.email;
+                    }
+                });
+            }
+
+            // Resume Link
+            if (p.resumeUrl) {
+                const resumeLinks = document.querySelectorAll('a[href$=".pdf"]');
+                resumeLinks.forEach(el => el.setAttribute("href", p.resumeUrl));
+            }
+
+        } catch (err) {
+            console.warn("Hydration skipped, using static HTML fallback:", err);
+        }
+    }
+
+    hydrateDynamicContent();
+
+    /* -------------------------------------------------------
        YEAR
     ------------------------------------------------------- */
 

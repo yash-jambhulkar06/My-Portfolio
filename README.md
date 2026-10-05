@@ -2,19 +2,21 @@
 
 Personal developer portfolio showcasing full-stack web applications, technical skills, and projects built with Python, Django, MySQL, JavaScript, and AI APIs.
 
-🌐 **Live Website:** [https://yashjambhulkar.netlify.app/](https://yashjambhulkar.netlify.app/)
+🌐 **Live Website:** [https://yashjambhulkar.netlify.app/](https://yashjambhulkar.netlify.app/)  
+🛡️ **Admin Panel:** [https://yashjambhulkar.netlify.app/admin.html](https://yashjambhulkar.netlify.app/admin.html)
 
 ---
 
 ## ⚡ Features
 
+- **Built-in Admin Dashboard (`/admin.html`):** Password-protected management console to update Profile details, Projects, Skills, and Contact information without touching code.
+- **GitHub Sync & Netlify One-Click Deploy:** Publish changes directly to GitHub via the GitHub API, which automatically triggers a live Netlify deployment in seconds.
 - **Interactive Developer Terminal:** Simulated Python environment in the hero section that transitions into an interactive CLI where visitors can type commands (`help`, `skills`, `projects`, `resume`, `contact`, `theme`, `clear`).
+- **High-Resolution Project Mockups:** UI previews for **Resume AI** (Live ATS Analyzer) and **Room Buddies** (Accommodation Platform).
 - **Dark & Light Mode:** Seamless theme switcher with persistence in `localStorage` and dynamic `<meta name="theme-color">` synchronization.
 - **Direct Resume CTAs:** Quick-access Resume links in both header navigation and hero section.
 - **Copy Email with Toast:** One-click clipboard copy for email address with immediate visual feedback.
-- **Featured Projects Showcase:** Detailed breakdowns of **Resume AI** (Live) and **Room Buddies** with tech stacks and feature highlights.
 - **SEO & Social Optimization:** Integrated Open Graph tags, Twitter cards, SVG favicon, and Schema.org JSON-LD structured data.
-- **Mobile Responsive:** Fluid layout with drawer navigation and buttery 60fps animations throttled via `requestAnimationFrame`.
 
 ---
 
@@ -23,7 +25,7 @@ Personal developer portfolio showcasing full-stack web applications, technical s
 - **Frontend:** HTML5, CSS3 (Custom design system, CSS Variables, Glassmorphism), Vanilla JavaScript (ES6+)
 - **Typography:** Bricolage Grotesque, IBM Plex Sans, IBM Plex Mono
 - **Backend & Tools Showcased:** Python, Django, MySQL, Groq API, Git, GitHub
-- **Deployment:** Netlify
+- **Deployment:** Netlify Continuous Deployment (via GitHub)
 
 ---
 
@@ -32,21 +34,35 @@ Personal developer portfolio showcasing full-stack web applications, technical s
 ```text
 Portfolio/
 ├── index.html         # Main semantic HTML5 markup
+├── admin.html         # Password-protected Admin Dashboard
+├── data/
+│   └── portfolio.json # Dynamic portfolio data source
 ├── css/
 │   └── style.css      # Design tokens, layouts, components & animations
 ├── js/
-│   └── main.js        # Theme toggle, interactive CLI terminal & UX logic
+│   └── main.js        # Theme toggle, interactive CLI, hydration & UX logic
 ├── assets/
 │   ├── favicon.svg    # Pythonic SVG badge favicon
-│   └── resume.pdf     # Developer resume / CV
+│   ├── resume.pdf     # Developer resume / CV
+│   └── images/        # High-res project mockup screenshots
+├── netlify.toml       # Netlify headers & publish directory config
 └── README.md          # Project documentation
 ```
 
 ---
 
-## 🚀 Local Development
+## 🛡️ Admin Panel Guide
 
-No package manager or build step required. Simply open `index.html` in your browser:
+1. Navigate to `/admin.html` (or click **Admin** in the footer).
+2. Enter the admin password (default: `admin123`).
+3. Edit your profile, projects, or skills in the dashboard tabs.
+4. **Publishing options**:
+   - **One-Click Netlify Sync**: Under the **GitHub & Deploy** tab, enter your GitHub Personal Access Token (PAT) with `repo` scope. Click **"Publish to Netlify"** — your changes are committed to GitHub and auto-deployed live by Netlify in 10-15 seconds!
+   - **Manual Export**: Under the **Backup & JSON** tab, download `portfolio.json`.
+
+---
+
+## 🚀 Local Development
 
 ```bash
 # Using Python's built-in HTTP server:
@@ -54,6 +70,7 @@ python -m http.server 8000
 
 # Open in browser:
 # http://localhost:8000
+# http://localhost:8000/admin.html
 ```
 
 ---

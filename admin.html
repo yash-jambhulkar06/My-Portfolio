@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Admin Dashboard | Yash Jambhulkar Portfolio</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #080f19;
+    --surface: #101a29;
+    --surface-2: #152235;
+    --surface-3: #1c2c44;
+    --line: #22334b;
+    --ink: #edf4fc;
+    --muted: #9aaac0;
+    
+    --blue: #65a6dd;
+    --yellow: #ffd43b;
+    --green: #2fbf71;
+    --red: #ff5f57;
+    
+    --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+    --font-body: "IBM Plex Sans", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+    
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Background mesh */
+.bg-glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(48,105,152,0.15), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255,212,59,0.1), transparent 40%);
+    z-index: 0;
+}
+
+/* Login Screen */
+#loginScreen {
+    position: fixed;
+    inset: 0;
+    background: rgba(8,15,25,0.92);
+    backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 20px;
+}
+
+.login-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 25px 60px -15px rgba(0,0,0,0.8);
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.login-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(255,212,59,0.1);
+    color: var(--yellow);
+    border: 1px solid rgba(255,212,59,0.25);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    margin-bottom: 20px;
+}
+
+.login-card h1 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    margin: 0 0 10px;
+}
+
+.login-card p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin-bottom: 28px;
+}
+
+/* Admin Layout */
+#adminApp {
+    display: none;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+/* Topbar */
+.admin-topbar {
+    height: 70px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(16,26,41,0.85);
+    backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-logo {
+    width: 38px;
+    height: 38px;
+    background: #09111d;
+    border: 1px solid var(--yellow);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--yellow);
+    font-size: 1rem;
+}
+
+.brand-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.brand-sub {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Main Container */
+.admin-main {
+    display: flex;
+    flex: 1;
+}
+
+/* Sidebar */
+.admin-sidebar {
+    width: 250px;
+    border-right: 1px solid var(--line);
+    background: rgba(16,26,41,0.5);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.92rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+    color: var(--ink);
+    background: var(--surface-2);
+}
+
+.nav-item.active {
+    color: var(--yellow);
+    background: rgba(255,212,59,0.08);
+    border-color: rgba(255,212,59,0.2);
+}
+
+.nav-item svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* Content Area */
+.admin-content {
+    flex: 1;
+    padding: 36px 48px;
+    max-width: 1100px;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.panel-header {
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.panel-header h2 {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    margin: 0 0 6px;
+}
+
+.panel-header p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Form Styles */
+.form-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 24px;
+}
+
+.form-card h3 {
+    margin: 0 0 20px;
+    font-size: 1.15rem;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    font-family: var(--font-mono);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="url"],
+input[type="email"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 0.92rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--blue);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Toggle Switch */
+.toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: var(--surface-3);
+    border-radius: 34px;
+    transition: .3s;
+    border: 1px solid var(--line);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: .3s;
+}
+
+input:checked + .slider {
+    background-color: var(--green);
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: var(--yellow);
+    color: #080f19;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -8px rgba(255,212,59,0.8);
+}
+
+.btn-secondary {
+    background: var(--surface-2);
+    border-color: var(--line);
+    color: var(--ink);
+}
+
+.btn-secondary:hover {
+    border-color: var(--blue);
+    transform: translateY(-2px);
+}
+
+.btn-publish {
+    background: linear-gradient(135deg, var(--green), #249757);
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 8px 25px -6px rgba(47,191,113,0.6);
+}
+
+.btn-publish:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -6px rgba(47,191,113,0.9);
+}
+
+.btn-danger {
+    background: rgba(255,95,87,0.15);
+    color: var(--red);
+    border-color: rgba(255,95,87,0.3);
+}
+
+.btn-danger:hover {
+    background: var(--red);
+    color: white;
+}
+
+/* Projects Table / Cards */
+.project-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+}
+
+.project-item-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.project-thumb {
+    width: 60px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: #09111d;
+    border: 1px solid var(--line);
+}
+
+.project-title {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.project-meta {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+}
+
+.project-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-overlay.open {
+    display: flex;
+}
+
+.modal-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 650px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 32px;
+}
+
+/* Terminal Log Console */
+.log-console {
+    background: #060b13;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--ink);
+    min-height: 140px;
+    max-height: 240px;
+    overflow-y: auto;
+    line-height: 1.7;
+    margin-top: 16px;
+}
+
+.log-entry.info { color: var(--blue); }
+.log-entry.success { color: var(--green); font-weight: 600; }
+.log-entry.error { color: var(--red); font-weight: 600; }
+
+/* Toast */
+.toast-msg {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 14px 22px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2000;
+}
+
+.toast-msg.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+@media (max-width: 850px) {
+    .admin-main { flex-direction: column; }
+    .admin-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; overflow-x: auto; }
+    .admin-content { padding: 24px; }
+}
+</style>
+</head>
+
+<body>
+<div class="bg-glow"></div>
+
+<!-- ==========================================
+     LOGIN MODAL
+========================================== -->
+<div id="loginScreen">
+    <div class="login-card">
+        <div class="login-badge">🛡️ PORTFOLIO ADMIN</div>
+        <h1>Welcome Back</h1>
+        <p>Enter your admin credentials to manage your live portfolio.</p>
+        
+        <form id="loginForm">
+            <div class="form-group" style="text-align: left;">
+                <label>Admin Password / PIN</label>
+                <input type="password" id="adminPasswordInput" placeholder="Enter password (default: admin123)" required autofocus>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <label style="font-size: 0.85rem; color: var(--muted); cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                    <input type="checkbox" id="rememberMe"> Remember me
+                </label>
+                <span style="font-size: 0.8rem; color: var(--yellow);">Default: admin123</span>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Unlock Dashboard →</button>
+        </form>
+    </div>
+</div>
+
+<!-- ==========================================
+     ADMIN APP
+========================================== -->
+<div id="adminApp">
+    
+    <!-- Topbar -->
+    <header class="admin-topbar">
+        <div class="brand">
+            <div class="brand-logo">YJ</div>
+            <div>
+                <div class="brand-title">Portfolio Manager</div>
+                <div class="brand-sub">yash-jambhulkar06/My-Portfolio</div>
+            </div>
+        </div>
+
+        <div class="topbar-actions">
+            <a href="index.html" target="_blank" class="btn btn-secondary">
+                View Site ↗
+            </a>
+            <button id="btnPublishTop" class="btn btn-publish">
+                Publish to Netlify 🚀
+            </button>
+            <button id="btnLogout" class="btn btn-secondary" style="padding: 10px;" title="Logout">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="admin-main">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="admin-sidebar">
+            <div class="nav-item active" data-tab="profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Profile & Bio
+            </div>
+            <div class="nav-item" data-tab="projects">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                Projects
+            </div>
+            <div class="nav-item" data-tab="skills">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                Skills
+            </div>
+            <div class="nav-item" data-tab="contact">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Contact & Socials
+            </div>
+            <div class="nav-item" data-tab="deploy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 12l-4-4-4 4M12 16V8"/></svg>
+                GitHub & Deploy
+            </div>
+            <div class="nav-item" data-tab="backup">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Backup & JSON
+            </div>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="admin-content">
+
+            <!-- TAB 1: PROFILE & BIO -->
+            <div id="tab-profile" class="tab-pane active">
+                <div class="panel-header">
+                    <div>
+                        <h2>Profile & Hero Section</h2>
+                        <p>Configure your personal branding, availability beacon, and headline.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveProfile()">Save Profile</button>
+                </div>
+
+                <div class="form-card">
+                    <h3>Basic Details</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" id="profFirstName">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" id="profLastName">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Availability Badge Text</label>
+                        <input type="text" id="profAvailText" placeholder="e.g. Available for Internships & Projects">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Availability Status</label>
+                        <div class="toggle-wrap">
+                            <label class="switch">
+                                <input type="checkbox" id="profIsAvail" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span id="availLabel" style="font-size: 0.9rem; font-weight: 500;">Active (Green Pulse Beacon)</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Specialty Roles (comma-separated)</label>
+                        <input type="text" id="profRoles" placeholder="Full Stack Python, Django Specialist, AI Integrator">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hero Subtitle / Description</label>
+                        <textarea id="profHeroDesc" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Resume File URL / Path</label>
+                        <input type="text" id="profResumeUrl" value="assets/resume.pdf">
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h3>About Me Section</h3>
+                    <div class="form-group">
+                        <label>Main About Paragraph</label>
+                        <textarea id="profAboutMain" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Current Focus / Learning Note</label>
+                        <textarea id="profAboutNote" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: PROJECTS -->
+            <div id="tab-projects" class="tab-pane">
+                <div class="panel-header">
+                    <div>
+                        <h2>Featured Projects</h2>
+                        <p>Manage the showcased projects, descriptions, live demo links, and mockups.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openAddProjectModal()">+ Add New Project</button>
+                </div>
+
+                <div class="form-card">
+                    <div id="projectsListContainer">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: SKILLS -->
+            <div id="tab-skills" class="tab-pane">
+                <div class="panel-header">
+                    <div>
+                        <h2>Technical Skills</h2>
+                        <p>Organize categories and skills displayed on your portfolio.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveSkills()">Save Skills</button>
+                </div>
+
+                <div id="skillsCategoriesContainer">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+
+            <!-- TAB 4: CONTACT -->
+            <div id="tab-contact" class="tab-pane">
+                <div class="panel-header">
+                    <div>
+                        <h2>Contact & Social Profiles</h2>
+                        <p>Update where recruiters and collaborators can reach you.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveContact()">Save Contact</button>
+                </div>
+
+                <div class="form-card">
+                    <h3>Contact Information</h3>
+                    <div class="form-group">
+                        <label>Direct Email Address</label>
+                        <input type="email" id="contactEmail" placeholder="jambhulkarn6@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label>GitHub Profile URL</label>
+                        <input type="url" id="contactGithub" placeholder="https://github.com/yash-jambhulkar06">
+                    </div>
+                    <div class="form-group">
+                        <label>LinkedIn Profile URL</label>
+                        <input type="url" id="contactLinkedin" placeholder="https://www.linkedin.com/in/yash-jambhulkar-6092663b6">
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: GITHUB & DEPLOY -->
+            <div id="tab-deploy" class="tab-pane">
+                <div class="panel-header">
+                    <div>
+                        <h2>GitHub & Netlify Auto-Deploy</h2>
+                        <p>Sync your changes straight to GitHub. Netlify will auto-deploy within seconds.</p>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h3>GitHub Repository Configuration</h3>
+                    <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 20px;">
+                        To publish directly from this admin panel to Netlify, provide a GitHub Personal Access Token (PAT) with <code style="color: var(--yellow);">repo</code> permission. Your token is stored <strong>only in your browser's private local storage</strong> and is never sent to any third-party server.
+                    </p>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Repository Owner / Name</label>
+                            <input type="text" id="ghRepo" value="yash-jambhulkar06/My-Portfolio">
+                        </div>
+                        <div class="form-group">
+                            <label>Branch</label>
+                            <input type="text" id="ghBranch" value="main">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>GitHub Personal Access Token (PAT)</label>
+                        <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                        <span style="font-size: 0.78rem; color: var(--muted);">
+                            Create a token at <a href="https://github.com/settings/tokens" target="_blank" style="color: var(--blue);">github.com/settings/tokens</a> (select "repo" scope).
+                        </span>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; margin-top: 14px;">
+                        <button class="btn btn-secondary" onclick="saveGitHubSettings()">Save Token Locally</button>
+                        <button class="btn btn-publish" onclick="publishToNetlify()">Publish Changes to Netlify 🚀</button>
+                    </div>
+
+                    <!-- Log Console -->
+                    <div class="log-console" id="deployLogs">
+                        <div class="log-entry info">[Ready] Admin Panel loaded. Configure your token above to enable direct Netlify publishing.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 6: BACKUP & JSON -->
+            <div id="tab-backup" class="tab-pane">
+                <div class="panel-header">
+                    <div>
+                        <h2>Backup & Raw JSON</h2>
+                        <p>Export or import your full portfolio configuration.</p>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h3>Raw Data Editor</h3>
+                    <textarea id="rawJsonEditor" style="min-height: 280px; font-family: var(--font-mono); font-size: 0.82rem;"></textarea>
+                    
+                    <div style="display: flex; gap: 12px; margin-top: 16px;">
+                        <button class="btn btn-secondary" onclick="downloadJsonBackup()">Download portfolio.json</button>
+                        <button class="btn btn-primary" onclick="saveRawJson()">Apply JSON Changes</button>
+                        <button class="btn btn-danger" onclick="resetToDefaults()">Reset to Defaults</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- ==========================================
+     PROJECT EDIT/ADD MODAL
+========================================== -->
+<div class="modal-overlay" id="projectModal">
+    <div class="modal-card">
+        <h2 id="modalProjectTitle" style="font-family: var(--font-display); margin-top: 0;">Add Project</h2>
+        <input type="hidden" id="editProjectId">
+
+        <div class="form-group">
+            <label>Project Title</label>
+            <input type="text" id="mProjTitle" placeholder="e.g. Resume AI" required>
+        </div>
+
+        <div class="form-group">
+            <label>Category / Meta</label>
+            <input type="text" id="mProjMeta" placeholder="e.g. AI Web Application">
+        </div>
+
+        <div class="form-group">
+            <label>Status</label>
+            <select id="mProjStatus">
+                <option value="Live">Live</option>
+                <option value="In development">In development</option>
+                <option value="Completed">Completed</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Preview Image URL</label>
+            <input type="text" id="mProjImage" placeholder="assets/images/resume_ai_preview.jpg">
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea id="mProjDesc" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Key Highlights (one per line)</label>
+            <textarea id="mProjHighlights" rows="3" placeholder="ATS score evaluation&#10;Groq LLaMA inference&#10;Render deployment"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Tech Tags (comma separated)</label>
+            <input type="text" id="mProjTags" placeholder="Python, Django, MySQL, Groq API">
+        </div>
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Live Demo URL (optional)</label>
+                <input type="url" id="mProjLiveUrl" placeholder="https://...">
+            </div>
+            <div class="form-group">
+                <label>GitHub URL</label>
+                <input type="url" id="mProjGithubUrl" placeholder="https://github.com/...">
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+            <button class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveProjectModal()">Save Project</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================
+     TOAST
+========================================== -->
+<div id="adminToast" class="toast-msg">
+    <span>Saved successfully!</span>
+</div>
+
+<!-- ==========================================
+     ADMIN JAVASCRIPT
+========================================== -->
+<script>
+(function() {
+    "use strict";
+
+    // State
+    let portfolioData = null;
+    const AUTH_KEY = "portfolio_admin_auth";
+    const GITHUB_TOKEN_KEY = "portfolio_gh_token";
+    const GITHUB_REPO_KEY = "portfolio_gh_repo";
+    const DRAFT_KEY = "portfolio_draft_data";
+
+    // Elements
+    const loginScreen = document.getElementById("loginScreen");
+    const adminApp = document.getElementById("adminApp");
+    const loginForm = document.getElementById("loginForm");
+    const adminPasswordInput = document.getElementById("adminPasswordInput");
+    const deployLogs = document.getElementById("deployLogs");
+
+    /* ----------------------------------------------------
+       AUTHENTICATION
+    ---------------------------------------------------- */
+    function checkAuth() {
+        const savedAuth = localStorage.getItem(AUTH_KEY);
+        if (savedAuth === "true") {
+            unlockDashboard();
+        }
+    }
+
+    loginForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const pwd = adminPasswordInput.value.trim();
+        // Default password check or custom
+        if (pwd === "admin123" || pwd === "yash2026") {
+            if (document.getElementById("rememberMe").checked) {
+                localStorage.setItem(AUTH_KEY, "true");
+            } else {
+                sessionStorage.setItem(AUTH_KEY, "true");
+            }
+            unlockDashboard();
+            showToast("Welcome to your Admin Dashboard!");
+        } else {
+            alert("Incorrect password. Default is: admin123");
+        }
+    });
+
+    document.getElementById("btnLogout").addEventListener("click", function() {
+        localStorage.removeItem(AUTH_KEY);
+        sessionStorage.removeItem(AUTH_KEY);
+        loginScreen.style.display = "flex";
+        adminApp.style.display = "none";
+    });
+
+    function unlockDashboard() {
+        loginScreen.style.display = "none";
+        adminApp.style.display = "flex";
+        loadData();
+    }
+
+    /* ----------------------------------------------------
+       DATA LOADING
+    ---------------------------------------------------- */
+    async function loadData() {
+        try {
+            // First check draft in localStorage
+            const localDraft = localStorage.getItem(DRAFT_KEY);
+            if (localDraft) {
+                portfolioData = JSON.parse(localDraft);
+            } else {
+                const res = await fetch("data/portfolio.json");
+                portfolioData = await res.json();
+            }
+            populateForms();
+            loadGitHubSettings();
+        } catch (err) {
+            console.error("Failed to load portfolio.json:", err);
+            log("Error loading data: " + err.message, "error");
+        }
+    }
+
+    function populateForms() {
+        if (!portfolioData) return;
+
+        // Profile
+        const p = portfolioData.profile || {};
+        document.getElementById("profFirstName").value = p.firstName || "";
+        document.getElementById("profLastName").value = p.lastName || "";
+        document.getElementById("profAvailText").value = p.availabilityText || "";
+        document.getElementById("profIsAvail").checked = p.isAvailable !== false;
+        document.getElementById("profRoles").value = (p.roles || []).join(", ");
+        document.getElementById("profHeroDesc").value = p.heroDescription || "";
+        document.getElementById("profResumeUrl").value = p.resumeUrl || "";
+        document.getElementById("profAboutMain").value = p.aboutMain || "";
+        document.getElementById("profAboutNote").value = p.aboutNote || "";
+
+        // Contact
+        document.getElementById("contactEmail").value = p.email || "";
+        document.getElementById("contactGithub").value = p.githubUrl || "";
+        document.getElementById("contactLinkedin").value = p.linkedinUrl || "";
+
+        // Projects
+        renderProjectsList();
+
+        // Skills
+        renderSkillsCategories();
+
+        // Raw JSON
+        document.getElementById("rawJsonEditor").value = JSON.stringify(portfolioData, null, 2);
+    }
+
+    /* ----------------------------------------------------
+       SAVE FUNCTIONS
+    ---------------------------------------------------- */
+    window.saveProfile = function() {
+        if (!portfolioData) return;
+        const p = portfolioData.profile;
+        p.firstName = document.getElementById("profFirstName").value.trim();
+        p.lastName = document.getElementById("profLastName").value.trim();
+        p.availabilityText = document.getElementById("profAvailText").value.trim();
+        p.isAvailable = document.getElementById("profIsAvail").checked;
+        p.roles = document.getElementById("profRoles").value.split(",").map(r => r.trim()).filter(Boolean);
+        p.heroDescription = document.getElementById("profHeroDesc").value.trim();
+        p.resumeUrl = document.getElementById("profResumeUrl").value.trim();
+        p.aboutMain = document.getElementById("profAboutMain").value.trim();
+        p.aboutNote = document.getElementById("profAboutNote").value.trim();
+
+        saveLocalDraft();
+        showToast("Profile changes saved locally!");
+    };
+
+    window.saveContact = function() {
+        if (!portfolioData) return;
+        const p = portfolioData.profile;
+        p.email = document.getElementById("contactEmail").value.trim();
+        p.githubUrl = document.getElementById("contactGithub").value.trim();
+        p.linkedinUrl = document.getElementById("contactLinkedin").value.trim();
+
+        saveLocalDraft();
+        showToast("Contact details saved locally!");
+    };
+
+    function saveLocalDraft() {
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(portfolioData));
+        document.getElementById("rawJsonEditor").value = JSON.stringify(portfolioData, null, 2);
+    }
+
+    /* ----------------------------------------------------
+       PROJECTS MANAGER
+    ---------------------------------------------------- */
+    function renderProjectsList() {
+        const container = document.getElementById("projectsListContainer");
+        container.innerHTML = "";
+        const projects = portfolioData.projects || [];
+
+        projects.forEach((proj, idx) => {
+            const item = document.createElement("div");
+            item.className = "project-item";
+            item.innerHTML = `
+                <div class="project-item-left">
+                    <img src="${proj.image || 'assets/images/resume_ai_preview.jpg'}" class="project-thumb" alt="thumbnail">
+                    <div>
+                        <div class="project-title">${escapeHtml(proj.title)} <span style="font-size:0.75rem; color:${proj.isLive ? 'var(--green)' : 'var(--yellow)'}; font-family:var(--font-mono)">[${escapeHtml(proj.status)}]</span></div>
+                        <div class="project-meta">${escapeHtml(proj.meta || '')} • ${(proj.tags || []).join(", ")}</div>
+                    </div>
+                </div>
+                <div class="project-actions">
+                    <button class="btn btn-secondary" onclick="openEditProjectModal(${idx})">Edit</button>
+                    <button class="btn btn-danger" onclick="deleteProject(${idx})">Delete</button>
+                </div>
+            `;
+            container.appendChild(item);
+        });
+    }
+
+    window.openAddProjectModal = function() {
+        document.getElementById("modalProjectTitle").textContent = "Add New Project";
+        document.getElementById("editProjectId").value = "-1";
+        document.getElementById("mProjTitle").value = "";
+        document.getElementById("mProjMeta").value = "";
+        document.getElementById("mProjStatus").value = "Live";
+        document.getElementById("mProjImage").value = "assets/images/resume_ai_preview.jpg";
+        document.getElementById("mProjDesc").value = "";
+        document.getElementById("mProjHighlights").value = "";
+        document.getElementById("mProjTags").value = "Python, Django, MySQL";
+        document.getElementById("mProjLiveUrl").value = "";
+        document.getElementById("mProjGithubUrl").value = "https://github.com/yash-jambhulkar06";
+
+        document.getElementById("projectModal").classList.add("open");
+    };
+
+    window.openEditProjectModal = function(index) {
+        const p = portfolioData.projects[index];
+        if (!p) return;
+
+        document.getElementById("modalProjectTitle").textContent = "Edit Project: " + p.title;
+        document.getElementById("editProjectId").value = index;
+        document.getElementById("mProjTitle").value = p.title || "";
+        document.getElementById("mProjMeta").value = p.meta || "";
+        document.getElementById("mProjStatus").value = p.status || "Live";
+        document.getElementById("mProjImage").value = p.image || "";
+        document.getElementById("mProjDesc").value = p.description || "";
+        document.getElementById("mProjHighlights").value = (p.highlights || []).join("\n");
+        document.getElementById("mProjTags").value = (p.tags || []).join(", ");
+        document.getElementById("mProjLiveUrl").value = p.liveUrl || "";
+        document.getElementById("mProjGithubUrl").value = p.githubUrl || "";
+
+        document.getElementById("projectModal").classList.add("open");
+    };
+
+    window.closeProjectModal = function() {
+        document.getElementById("projectModal").classList.remove("open");
+    };
+
+    window.saveProjectModal = function() {
+        const idIndex = parseInt(document.getElementById("editProjectId").value, 10);
+        const statusVal = document.getElementById("mProjStatus").value;
+
+        const newObj = {
+            id: document.getElementById("mProjTitle").value.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+            title: document.getElementById("mProjTitle").value.trim(),
+            meta: document.getElementById("mProjMeta").value.trim(),
+            status: statusVal,
+            isLive: statusVal.toLowerCase() === "live",
+            image: document.getElementById("mProjImage").value.trim(),
+            description: document.getElementById("mProjDesc").value.trim(),
+            highlights: document.getElementById("mProjHighlights").value.split("\n").map(h => h.trim()).filter(Boolean),
+            tags: document.getElementById("mProjTags").value.split(",").map(t => t.trim()).filter(Boolean),
+            liveUrl: document.getElementById("mProjLiveUrl").value.trim(),
+            githubUrl: document.getElementById("mProjGithubUrl").value.trim()
+        };
+
+        if (!newObj.title) {
+            alert("Title is required!");
+            return;
+        }
+
+        if (idIndex >= 0) {
+            portfolioData.projects[idIndex] = newObj;
+        } else {
+            portfolioData.projects.push(newObj);
+        }
+
+        saveLocalDraft();
+        renderProjectsList();
+        closeProjectModal();
+        showToast("Project saved!");
+    };
+
+    window.deleteProject = function(index) {
+        if (confirm("Are you sure you want to remove this project?")) {
+            portfolioData.projects.splice(index, 1);
+            saveLocalDraft();
+            renderProjectsList();
+            showToast("Project removed.");
+        }
+    };
+
+    /* ----------------------------------------------------
+       SKILLS MANAGER
+    ---------------------------------------------------- */
+    function renderSkillsCategories() {
+        const container = document.getElementById("skillsCategoriesContainer");
+        container.innerHTML = "";
+        const cats = portfolioData.skillsCategories || [];
+
+        cats.forEach((cat, cIdx) => {
+            const card = document.createElement("div");
+            card.className = "form-card";
+            card.innerHTML = `
+                <h3>${escapeHtml(cat.name)}</h3>
+                <div class="form-group">
+                    <label>Category Title</label>
+                    <input type="text" class="cat-title-input" data-index="${cIdx}" value="${escapeHtml(cat.name)}">
+                </div>
+                <div class="form-group">
+                    <label>Skills in this category (comma-separated)</label>
+                    <input type="text" class="cat-skills-input" data-index="${cIdx}" value="${escapeHtml((cat.skills || []).join(", "))}">
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    window.saveSkills = function() {
+        const catTitles = document.querySelectorAll(".cat-title-input");
+        const catSkills = document.querySelectorAll(".cat-skills-input");
+
+        const updated = [];
+        catTitles.forEach((titleEl, idx) => {
+            const name = titleEl.value.trim();
+            const skills = (catSkills[idx].value || "").split(",").map(s => s.trim()).filter(Boolean);
+            if (name) {
+                updated.push({ name, skills });
+            }
+        });
+
+        portfolioData.skillsCategories = updated;
+        saveLocalDraft();
+        showToast("Skills updated!");
+    };
+
+    /* ----------------------------------------------------
+       GITHUB & NETLIFY SYNC
+    ---------------------------------------------------- */
+    function loadGitHubSettings() {
+        const token = localStorage.getItem(GITHUB_TOKEN_KEY) || "";
+        const repo = localStorage.getItem(GITHUB_REPO_KEY) || "yash-jambhulkar06/My-Portfolio";
+        document.getElementById("ghToken").value = token;
+        document.getElementById("ghRepo").value = repo;
+    }
+
+    window.saveGitHubSettings = function() {
+        const token = document.getElementById("ghToken").value.trim();
+        const repo = document.getElementById("ghRepo").value.trim();
+        localStorage.setItem(GITHUB_TOKEN_KEY, token);
+        localStorage.setItem(GITHUB_REPO_KEY, repo);
+        showToast("GitHub settings saved in local browser!");
+        log("GitHub credentials updated locally.", "info");
+    };
+
+    window.publishToNetlify = async function() {
+        saveLocalDraft();
+
+        const token = document.getElementById("ghToken").value.trim() || localStorage.getItem(GITHUB_TOKEN_KEY);
+        const repo = document.getElementById("ghRepo").value.trim() || "yash-jambhulkar06/My-Portfolio";
+        const branch = document.getElementById("ghBranch").value.trim() || "main";
+        const path = "data/portfolio.json";
+
+        if (!token) {
+            alert("Please enter a GitHub Personal Access Token (PAT) with repo scope to publish.");
+            document.querySelector('[data-tab="deploy"]').click();
+            return;
+        }
+
+        log("🚀 Starting publish workflow to Netlify...", "info");
+        log(`Checking GitHub repo: ${repo} (branch: ${branch})...`, "info");
+
+        try {
+            const getUrl = `https://api.github.com/repos/${repo}/contents/${path}?ref=${branch}`;
+            
+            // 1. Get current file SHA
+            log("Fetching latest file SHA from GitHub...", "info");
+            const getRes = await fetch(getUrl, {
+                headers: {
+                    "Authorization": `token ${token}`,
+                    "Accept": "application/vnd.github.v3+json"
+                }
+            });
+
+            let sha = null;
+            if (getRes.ok) {
+                const getJson = await getRes.json();
+                sha = getJson.sha;
+                log(`Found existing file SHA: ${sha}`, "info");
+            } else if (getRes.status === 404) {
+                log("File does not exist yet. Will create new file.", "info");
+            } else {
+                const errJson = await getRes.json();
+                throw new Error(`GitHub API Error: ${errJson.message || getRes.statusText}`);
+            }
+
+            // 2. Commit update
+            log("Creating commit on GitHub...", "info");
+            const contentString = JSON.stringify(portfolioData, null, 2);
+            // UTF-8 to Base64
+            const b64Content = btoa(unescape(encodeURIComponent(contentString)));
+
+            const putPayload = {
+                message: "Update portfolio content via Admin Dashboard",
+                content: b64Content,
+                branch: branch
+            };
+            if (sha) putPayload.sha = sha;
+
+            const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `token ${token}`,
+                    "Content-Type": "application/json",
+                    "Accept": "application/vnd.github.v3+json"
+                },
+                body: JSON.stringify(putPayload)
+            });
+
+            if (!putRes.ok) {
+                const errData = await putRes.json();
+                throw new Error(`Failed to commit: ${errData.message || putRes.statusText}`);
+            }
+
+            const commitData = await putRes.json();
+            log(`✅ Commit successful! SHA: ${commitData.commit.sha.substring(0, 7)}`, "success");
+            log(`🎉 Netlify build triggered automatically! Changes will be live in 10-15 seconds.`, "success");
+            showToast("Published to Netlify successfully! 🚀");
+
+        } catch (err) {
+            console.error("Publish error:", err);
+            log(`❌ Publish failed: ${err.message}`, "error");
+            alert(`Publish failed: ${err.message}\nCheck your token permissions or repository name.`);
+        }
+    };
+
+    document.getElementById("btnPublishTop").addEventListener("click", window.publishToNetlify);
+
+    function log(msg, type = "info") {
+        const div = document.createElement("div");
+        div.className = `log-entry ${type}`;
+        div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+        deployLogs.appendChild(div);
+        deployLogs.scrollTop = deployLogs.scrollHeight;
+    }
+
+    /* ----------------------------------------------------
+       BACKUP & RAW JSON
+    ---------------------------------------------------- */
+    window.downloadJsonBackup = function() {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(portfolioData, null, 2));
+        const a = document.createElement("a");
+        a.setAttribute("href", dataStr);
+        a.setAttribute("download", "portfolio.json");
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        showToast("Downloaded portfolio.json");
+    };
+
+    window.saveRawJson = function() {
+        try {
+            const raw = document.getElementById("rawJsonEditor").value;
+            portfolioData = JSON.parse(raw);
+            saveLocalDraft();
+            populateForms();
+            showToast("Raw JSON applied successfully!");
+        } catch (e) {
+            alert("Invalid JSON: " + e.message);
+        }
+    };
+
+    window.resetToDefaults = async function() {
+        if (confirm("Reset all edits to initial defaults?")) {
+            localStorage.removeItem(DRAFT_KEY);
+            const res = await fetch("data/portfolio.json");
+            portfolioData = await res.json();
+            populateForms();
+            showToast("Reset to default configuration.");
+        }
+    };
+
+    /* ----------------------------------------------------
+       TAB NAVIGATION
+    ---------------------------------------------------- */
+    const navItems = document.querySelectorAll(".nav-item");
+    const tabPanes = document.querySelectorAll(".tab-pane");
+
+    navItems.forEach(item => {
+        item.addEventListener("click", function() {
+            const target = this.getAttribute("data-tab");
+            navItems.forEach(n => n.classList.remove("active"));
+            tabPanes.forEach(p => p.classList.remove("active"));
+
+            this.classList.add("active");
+            const targetPane = document.getElementById(`tab-${target}`);
+            if (targetPane) targetPane.classList.add("active");
+        });
+    });
+
+    /* ----------------------------------------------------
+       TOAST UTILITY
+    ---------------------------------------------------- */
+    const toastEl = document.getElementById("adminToast");
+    let toastTimer;
+    function showToast(msg) {
+        if (!toastEl) return;
+        toastEl.querySelector("span").textContent = msg;
+        toastEl.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+            toastEl.classList.remove("show");
+        }, 2800);
+    }
+
+    function escapeHtml(str) {
+        if (!str) return "";
+        return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    // Initialize
+    checkAuth();
+
+})();
+</script>
+</body>
+</html>

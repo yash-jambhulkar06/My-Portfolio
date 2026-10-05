@@ -1,0 +1,130 @@
+{
+  "profile": {
+    "firstName": "Yash Dhanraj",
+    "lastName": "Jambhulkar",
+    "availabilityText": "Available for Internships & Projects",
+    "isAvailable": true,
+    "roles": [
+      "Full Stack Python",
+      "Django Specialist",
+      "AI Integrator"
+    ],
+    "heroDescription": "Full Stack Python Developer and Diploma in Computer Technology student building practical, production-ready web applications with Django, MySQL, JavaScript and AI APIs.",
+    "aboutMain": "I'm Yash, a Full Stack Python Developer who enjoys turning ideas into impactful web applications. I engineer reliable backend systems with Django & MySQL, build sleek interfaces with JavaScript, and supercharge everyday workflows with modern AI APIs.",
+    "aboutNote": "My current focus is building practical SaaS applications, optimizing relational database architectures, and integrating fast LLM inference pipelines with Groq API.",
+    "email": "jambhulkarn6@gmail.com",
+    "githubUrl": "https://github.com/yash-jambhulkar06",
+    "linkedinUrl": "https://www.linkedin.com/in/yash-jambhulkar-6092663b6",
+    "resumeUrl": "assets/resume.pdf"
+  },
+  "stats": [
+    {
+      "value": "2",
+      "label": "Featured projects"
+    },
+    {
+      "value": "5+",
+      "label": "Core technologies"
+    },
+    {
+      "value": "AI",
+      "label": "Integrated into projects"
+    }
+  ],
+  "skillsCategories": [
+    {
+      "name": "Languages",
+      "skills": [
+        "Python",
+        "C Programming",
+        "JavaScript (ES6+)"
+      ]
+    },
+    {
+      "name": "Backend & Frameworks",
+      "skills": [
+        "Django",
+        "Django ORM",
+        "RESTful APIs",
+        "Object-Oriented Design",
+        "Authentication & Security"
+      ]
+    },
+    {
+      "name": "Frontend & UI",
+      "skills": [
+        "HTML5",
+        "CSS3 / Flexbox / Grid",
+        "Glassmorphism",
+        "Responsive Web Design",
+        "DOM Manipulation"
+      ]
+    },
+    {
+      "name": "Databases, AI & Tools",
+      "skills": [
+        "MySQL",
+        "Groq Cloud AI",
+        "LLaMA 3 API",
+        "Git",
+        "GitHub",
+        "Render & Netlify"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "room-buddies",
+      "title": "Room Buddies",
+      "meta": "Full Stack Web Application",
+      "status": "In development",
+      "isLive": false,
+      "image": "assets/images/room_buddies_preview.jpg",
+      "description": "A comprehensive accommodation and lifestyle platform connecting tenants, roommates, and local amenities with intelligent recommendation features.",
+      "highlights": [
+        "Multi-tenant room and roommate matching powered by Django ORM",
+        "MySQL relational schema designed for verified listings & preferences",
+        "Integrated Groq API for smart discovery and conversational assistant"
+      ],
+      "tags": [
+        "Python",
+        "Django",
+        "MySQL",
+        "JavaScript",
+        "Groq API"
+      ],
+      "liveUrl": "",
+      "githubUrl": "https://github.com/yash-jambhulkar06"
+    },
+    {
+      "id": "resume-ai",
+      "title": "Resume AI",
+      "meta": "AI-Powered Web Application",
+      "status": "Live",
+      "isLive": true,
+      "image": "assets/images/resume_ai_preview.jpg",
+      "description": "An intelligent resume analyzer providing instant ATS compatibility scoring, role keyword gap insights, and actionable formatting critique for job seekers.",
+      "highlights": [
+        "Automated ATS score evaluation and role keyword gap analysis",
+        "Groq API high-throughput LLaMA inference for tailored critiques",
+        "Production deployment on Render with real-time feedback"
+      ],
+      "tags": [
+        "Python",
+        "Django",
+        "MySQL",
+        "JavaScript",
+        "Groq API"
+      ],
+      "liveUrl": "https://resumeai-zwez.onrender.com",
+      "githubUrl": "https://github.com/yash-jambhulkar06"
+    }
+  ],
+  "education": [
+    {
+      "date": "2024 — 2027",
+      "degree": "Diploma in Computer Technology",
+      "description": "Building a strong engineering foundation in algorithms, data structures, software engineering principles, databases, operating systems, and modern web application development."
+    }
+  ]
+}
