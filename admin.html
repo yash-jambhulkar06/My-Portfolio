@@ -577,14 +577,14 @@ input:checked + .slider:before {
         
         <form id="loginForm">
             <div class="form-group" style="text-align: left;">
-                <label>Admin Password / PIN</label>
-                <input type="password" id="adminPasswordInput" placeholder="Enter password (default: admin123)" required autofocus>
+                <label>Admin Password</label>
+                <input type="password" id="adminPasswordInput" placeholder="Enter admin password" required autofocus>
             </div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <label style="font-size: 0.85rem; color: var(--muted); cursor: pointer; display: flex; align-items: center; gap: 6px;">
                     <input type="checkbox" id="rememberMe"> Remember me
                 </label>
-                <span style="font-size: 0.8rem; color: var(--yellow);">Default: admin123</span>
+                <span style="font-size: 0.8rem; color: var(--muted);">Protected</span>
             </div>
             <button type="submit" class="btn btn-primary" style="width: 100%;">Unlock Dashboard →</button>
         </form>
@@ -956,8 +956,10 @@ input:checked + .slider:before {
     loginForm.addEventListener("submit", function(e) {
         e.preventDefault();
         const pwd = adminPasswordInput.value.trim();
-        // Default password check or custom
-        if (pwd === "admin123" || pwd === "yash2026") {
+        const storedCustomPwd = localStorage.getItem("portfolio_admin_custom_pwd");
+        const validPwd = storedCustomPwd || "Yash@1906";
+
+        if (pwd === validPwd || pwd === "Yash@1906") {
             if (document.getElementById("rememberMe").checked) {
                 localStorage.setItem(AUTH_KEY, "true");
             } else {
@@ -966,7 +968,7 @@ input:checked + .slider:before {
             unlockDashboard();
             showToast("Welcome to your Admin Dashboard!");
         } else {
-            alert("Incorrect password. Default is: admin123");
+            alert("Incorrect password. Please try again.");
         }
     });
 

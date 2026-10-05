@@ -54,7 +54,7 @@ Portfolio/
 ## 🛡️ Admin Panel Guide
 
 1. Navigate to `/admin.html` (or click **Admin** in the footer).
-2. Enter the admin password (default: `admin123`).
+2. Enter your secure admin password.
 3. Edit your profile, projects, or skills in the dashboard tabs.
 4. **Publishing options**:
    - **One-Click Netlify Sync**: Under the **GitHub & Deploy** tab, enter your GitHub Personal Access Token (PAT) with `repo` scope. Click **"Publish to Netlify"** — your changes are committed to GitHub and auto-deployed live by Netlify in 10-15 seconds!
