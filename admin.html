@@ -12,18 +12,19 @@
 
 <style>
 :root {
-    --bg: #080f19;
-    --surface: #101a29;
-    --surface-2: #152235;
-    --surface-3: #1c2c44;
-    --line: #22334b;
-    --ink: #edf4fc;
-    --muted: #9aaac0;
+    --bg: #090d16;
+    --surface: #0f172a;
+    --surface-2: #162033;
+    --surface-3: #1e293b;
+    --line: #1e293b;
+    --ink: #f8fafc;
+    --muted: #94a3b8;
     
-    --blue: #65a6dd;
-    --yellow: #ffd43b;
-    --green: #2fbf71;
-    --red: #ff5f57;
+    --primary: #6366f1;
+    --blue: #6366f1;
+    --yellow: #38bdf8;
+    --green: #10b981;
+    --red: #f43f5e;
     
     --font-display: "Bricolage Grotesque", system-ui, sans-serif;
     --font-body: "IBM Plex Sans", system-ui, sans-serif;
@@ -54,8 +55,8 @@ body {
     inset: 0;
     pointer-events: none;
     background: 
-        radial-gradient(circle at 10% 20%, rgba(48,105,152,0.15), transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(255,212,59,0.1), transparent 40%);
+        radial-gradient(circle at 10% 20%, rgba(99,102,241,0.18), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(56,189,248,0.14), transparent 40%);
     z-index: 0;
 }
 
@@ -91,9 +92,7 @@ body {
     gap: 8px;
     padding: 6px 14px;
     border-radius: 999px;
-    background: rgba(255,212,59,0.1);
-    color: var(--yellow);
-    border: 1px solid rgba(255,212,59,0.25);
+    background: rgba(99,102,241,0.14); color: var(--blue); border: 1px solid rgba(99,102,241,0.3);
     font-family: var(--font-mono);
     font-size: 0.78rem;
     margin-bottom: 20px;
@@ -947,7 +946,7 @@ input:checked + .slider:before {
        AUTHENTICATION
     ---------------------------------------------------- */
     function checkAuth() {
-        const savedAuth = localStorage.getItem(AUTH_KEY);
+        const savedAuth = localStorage.getItem(AUTH_KEY) || sessionStorage.getItem(AUTH_KEY);
         if (savedAuth === "true") {
             unlockDashboard();
         }
@@ -1085,7 +1084,7 @@ input:checked + .slider:before {
             item.className = "project-item";
             item.innerHTML = `
                 <div class="project-item-left">
-                    <img src="${proj.image || 'assets/images/resume_ai_preview.jpg'}" class="project-thumb" alt="thumbnail">
+                    <img src="${proj.image || 'assets/images/resume_ai_preview.jpg'}" class="project-thumb" alt="thumbnail" onerror="this.onerror=null;this.src='assets/images/resume_ai_preview.jpg'">
                     <div>
                         <div class="project-title">${escapeHtml(proj.title)} <span style="font-size:0.75rem; color:${proj.isLive ? 'var(--green)' : 'var(--yellow)'}; font-family:var(--font-mono)">[${escapeHtml(proj.status)}]</span></div>
                         <div class="project-meta">${escapeHtml(proj.meta || '')} • ${(proj.tags || []).join(", ")}</div>

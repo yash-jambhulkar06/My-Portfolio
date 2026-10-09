@@ -1,37 +1,62 @@
 /* =========================================================
-   DESIGN TOKENS
+   DESIGN TOKENS - CYBER OBSIDIAN THEME & CONTRAST SYSTEM
 ========================================================= */
 
 :root {
-    --bg: #f4f7fb;
-    --surface: #ffffff;
-    --surface-2: #eef3f9;
-    --glass: rgba(244,247,251,.78);
+    /* DEFAULT THEME: MODERN OBSIDIAN / CYBER TECH DARK */
+    --bg: #090d16;
+    --surface: #0f172a;
+    --surface-2: #162033;
+    --surface-3: #1e293b;
+    --glass: rgba(15, 23, 42, 0.82);
 
-    --ink: #0f1b2d;
-    --muted: #5c6d83;
-    --line: #d9e2ee;
+    --ink: #f8fafc;
+    --muted: #94a3b8;
+    --line: #1e293b;
 
-    --blue: #306998;
-    --blue-dark: #1f4f76;
-    --yellow: #ffd43b;
-    --yellow-dark: #eabf1e;
+    /* Primary Accent: Electric Indigo */
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-hover: #818cf8;
+    --primary-glow: rgba(99, 102, 241, 0.45);
 
-    --green: #2fbf71;
-    --red: #ff5f57;
+    /* Secondary Accent: Cyber Cyan */
+    --cyan: #38bdf8;
+    --cyan-glow: rgba(56, 189, 248, 0.35);
 
-    --code-bg: #09111d;
-    --code-ink: #eaf1fa;
-    --code-muted: #8194ae;
-    --code-yellow: #ffd43b;
-    --code-blue: #71b7f2;
-    --code-green: #70d69a;
+    /* Tertiary Accent: Cyber Emerald */
+    --green: #10b981;
+    --green-dark: #059669;
+    --green-glow: rgba(16, 185, 129, 0.35);
+
+    /* Highlight Accents */
+    --amber: #f59e0b;
+    --red: #f43f5e;
+
+    /* Backward compatibility aliases */
+    --blue: #6366f1;
+    --blue-dark: #4f46e5;
+    --yellow: #38bdf8;
+    --yellow-dark: #0284c7;
+
+    /* Background Glow Meshes */
+    --blob-1: rgba(99, 102, 241, 0.22);
+    --blob-2: rgba(56, 189, 248, 0.18);
+    --hero-glow: rgba(99, 102, 241, 0.12);
+
+    /* Code Terminal Colors */
+    --code-bg: #060b13;
+    --code-ink: #f1f5f9;
+    --code-muted: #64748b;
+    --code-yellow: #38bdf8;
+    --code-blue: #818cf8;
+    --code-green: #34d399;
 
     --shadow:
-        0 24px 60px -30px rgba(15,27,45,.32);
+        0 25px 65px -30px rgba(0, 0, 0, 0.75);
 
     --shadow-hover:
-        0 30px 70px -30px rgba(15,27,45,.45);
+        0 30px 75px -25px rgba(0, 0, 0, 0.85);
 
     --display:
         "Bricolage Grotesque",
@@ -54,47 +79,102 @@
         monospace;
 }
 
-:root[data-theme="dark"] {
-    --bg: #080f19;
-    --surface: #101a29;
-    --surface-2: #152235;
-    --glass: rgba(8,15,25,.78);
+:root[data-theme="light"] {
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --surface-2: #f1f5f9;
+    --surface-3: #e2e8f0;
+    --glass: rgba(255, 255, 255, 0.88);
 
-    --ink: #edf4fc;
-    --muted: #9aaac0;
-    --line: #22334b;
+    --ink: #0f172a;
+    --muted: #475569;
+    --line: #e2e8f0;
 
-    --blue: #65a6dd;
-    --blue-dark: #4b88bb;
-    --yellow: #ffd43b;
+    --primary: #4f46e5;
+    --primary-dark: #4338ca;
+    --primary-hover: #6366f1;
+    --primary-glow: rgba(79, 70, 229, 0.25);
+
+    --cyan: #0284c7;
+    --cyan-glow: rgba(2, 132, 199, 0.2);
+
+    --green: #059669;
+    --green-dark: #047857;
+    --green-glow: rgba(5, 150, 105, 0.2);
+
+    --amber: #d97706;
+    --red: #e11d48;
+
+    --blue: #4f46e5;
+    --blue-dark: #4338ca;
+    --yellow: #0284c7;
+    --yellow-dark: #0369a1;
+
+    --blob-1: rgba(79, 70, 229, 0.12);
+    --blob-2: rgba(2, 132, 199, 0.1);
+    --hero-glow: rgba(79, 70, 229, 0.08);
+
+    --code-bg: #0f172a;
+    --code-ink: #f8fafc;
+    --code-muted: #94a3b8;
+    --code-yellow: #38bdf8;
+    --code-blue: #818cf8;
+    --code-green: #34d399;
 
     --shadow:
-        0 25px 65px -30px rgba(0,0,0,.75);
+        0 20px 50px -25px rgba(15, 23, 42, 0.12);
 
     --shadow-hover:
-        0 30px 75px -25px rgba(0,0,0,.85);
+        0 28px 65px -25px rgba(15, 23, 42, 0.2);
 }
 
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-        --bg: #080f19;
-        --surface: #101a29;
-        --surface-2: #152235;
-        --glass: rgba(8,15,25,.78);
+:root[data-theme="dark"] {
+    --bg: #090d16;
+    --surface: #0f172a;
+    --surface-2: #162033;
+    --surface-3: #1e293b;
+    --glass: rgba(15, 23, 42, 0.82);
 
-        --ink: #edf4fc;
-        --muted: #9aaac0;
-        --line: #22334b;
+    --ink: #f8fafc;
+    --muted: #94a3b8;
+    --line: #1e293b;
 
-        --blue: #65a6dd;
-        --blue-dark: #4b88bb;
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-hover: #818cf8;
+    --primary-glow: rgba(99, 102, 241, 0.45);
 
-        --shadow:
-            0 25px 65px -30px rgba(0,0,0,.75);
+    --cyan: #38bdf8;
+    --cyan-glow: rgba(56, 189, 248, 0.35);
 
-        --shadow-hover:
-            0 30px 75px -25px rgba(0,0,0,.85);
-    }
+    --green: #10b981;
+    --green-dark: #059669;
+    --green-glow: rgba(16, 185, 129, 0.35);
+
+    --amber: #f59e0b;
+    --red: #f43f5e;
+
+    --blue: #6366f1;
+    --blue-dark: #4f46e5;
+    --yellow: #38bdf8;
+    --yellow-dark: #0284c7;
+
+    --blob-1: rgba(99, 102, 241, 0.22);
+    --blob-2: rgba(56, 189, 248, 0.18);
+    --hero-glow: rgba(99, 102, 241, 0.12);
+
+    --code-bg: #060b13;
+    --code-ink: #f1f5f9;
+    --code-muted: #64748b;
+    --code-yellow: #38bdf8;
+    --code-blue: #818cf8;
+    --code-green: #34d399;
+
+    --shadow:
+        0 25px 65px -30px rgba(0, 0, 0, 0.75);
+
+    --shadow-hover:
+        0 30px 75px -25px rgba(0, 0, 0, 0.85);
 }
 
 
@@ -128,8 +208,8 @@ body {
 }
 
 body::selection {
-    background: var(--yellow);
-    color: var(--ink);
+    background: var(--primary);
+    color: #ffffff;
 }
 
 h1,
@@ -226,7 +306,7 @@ svg {
     height: 520px;
     left: -220px;
     top: -180px;
-    background: rgba(48,105,152,.25);
+    background: var(--blob-1);
     animation: floatOne 18s ease-in-out infinite alternate;
 }
 
@@ -235,7 +315,7 @@ svg {
     height: 480px;
     right: -180px;
     bottom: -160px;
-    background: rgba(255,212,59,.23);
+    background: var(--blob-2);
     animation: floatTwo 22s ease-in-out infinite alternate;
 }
 
@@ -269,7 +349,7 @@ svg {
     display: block;
     width: 100%;
     height: 100%;
-    background: var(--yellow);
+    background: linear-gradient(90deg, var(--primary) 0%, var(--cyan) 50%, var(--green) 100%);
     transform: scaleX(0);
     transform-origin: left;
 }
@@ -303,21 +383,16 @@ header {
 .logo {
     width: 44px;
     height: 44px;
-
     display: grid;
     place-items: center;
-
     border-radius: 13px;
-
-    background: var(--yellow);
-    color: #0f1b2d;
-
+    background: linear-gradient(135deg, var(--primary) 0%, var(--cyan) 100%);
+    color: #ffffff;
     font-family: var(--display);
     font-weight: 800;
     font-size: 1.05rem;
-
     text-decoration: none;
-
+    box-shadow: 0 8px 22px -6px var(--primary-glow);
     transition:
         transform .25s ease,
         box-shadow .25s ease;
@@ -325,7 +400,7 @@ header {
 
 .logo:hover {
     transform: rotate(-7deg) scale(1.08);
-    box-shadow: 0 10px 25px -10px rgba(255,212,59,.9);
+    box-shadow: 0 12px 28px -6px var(--cyan-glow);
 }
 
 .nav-links {
@@ -402,7 +477,21 @@ header {
 }
 
 .sun {
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.moon {
     display: none;
+    transition: transform 0.3s ease;
+}
+
+:root[data-theme="light"] .sun {
+    display: none;
+}
+
+:root[data-theme="light"] .moon {
+    display: block;
 }
 
 :root[data-theme="dark"] .sun {
@@ -411,16 +500,6 @@ header {
 
 :root[data-theme="dark"] .moon {
     display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .sun {
-        display: block;
-    }
-
-    :root:not([data-theme="light"]) .moon {
-        display: none;
-    }
 }
 
 .menu-button {
@@ -594,16 +673,16 @@ header {
 }
 
 .button-primary {
-    background: var(--yellow);
-    color: #0f1b2d;
-
-    box-shadow:
-        0 15px 30px -17px rgba(255,212,59,.9);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 14px 30px -10px var(--primary-glow);
 }
 
 .button-primary:hover {
-    box-shadow:
-        0 20px 35px -16px rgba(255,212,59,1);
+    box-shadow: 0 18px 36px -8px var(--primary-glow);
+    transform: translateY(-3px);
+    color: #ffffff;
 }
 
 .button-secondary {
@@ -1798,10 +1877,10 @@ footer {
 }
 
 .button-nav:hover {
-    border-color: var(--yellow);
+    border-color: var(--primary);
     background: var(--surface-2);
     transform: translateY(-2px);
-    color: var(--ink);
+    color: var(--primary);
 }
 
 .button-outline {
@@ -1982,10 +2061,16 @@ footer {
 
 /* Hero Typography & Role Pills */
 .name-gradient {
-    background: linear-gradient(135deg, var(--blue) 0%, #5298d3 50%, var(--yellow) 100%);
+    background: linear-gradient(135deg, #818cf8 0%, #38bdf8 50%, #34d399 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
+}
+
+:root[data-theme="light"] .name-gradient {
+    background: linear-gradient(135deg, #4f46e5 0%, #0284c7 50%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .hero-roles {
@@ -2000,11 +2085,18 @@ footer {
     font-family: var(--mono);
     font-size: 0.78rem;
     font-weight: 500;
-    padding: 4px 11px;
-    border-radius: 8px;
-    background: rgba(48,105,152,0.1);
-    color: var(--blue);
-    border: 1px solid rgba(48,105,152,0.22);
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: rgba(99, 102, 241, 0.12);
+    color: var(--cyan);
+    border: 1px solid rgba(99, 102, 241, 0.28);
+    transition: all 0.2s ease;
+}
+
+.role-pill:hover {
+    background: rgba(99, 102, 241, 0.22);
+    border-color: var(--cyan);
+    transform: translateY(-1px);
 }
 
 :root[data-theme=dark] .role-pill {
@@ -2205,8 +2297,9 @@ footer {
 }
 
 .back-to-top-btn:hover {
-    border-color: var(--yellow);
+    border-color: var(--primary);
     transform: translateY(-3px) scale(1.06);
+    box-shadow: 0 12px 30px -8px var(--primary-glow);
 }
 
 .progress-ring {
@@ -2220,7 +2313,21 @@ footer {
 }
 
 .progress-ring-bar {
-    stroke: var(--yellow);
+    stroke: var(--primary);
     stroke-linecap: round;
     transition: stroke-dashoffset 0.1s ease;
+}
+
+
+/* Terminal Utilities */
+.green, .output.green {
+    color: var(--green) !important;
+}
+
+.cyan, .output.cyan {
+    color: var(--cyan) !important;
+}
+
+.yellow, .output.yellow {
+    color: var(--amber) !important;
 }

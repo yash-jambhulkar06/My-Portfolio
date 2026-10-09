@@ -26,59 +26,27 @@
         if (meta) {
             meta.setAttribute(
                 "content",
-                theme === "dark" ? "#080f19" : "#f4f7fb"
+                theme === "dark" ? "#090d16" : "#f8fafc"
             );
         }
     }
 
     try {
-        const savedTheme =
-            localStorage.getItem("portfolio-theme");
-
-        if (
-            savedTheme === "dark" ||
-            savedTheme === "light"
-        ) {
-            root.setAttribute(
-                "data-theme",
-                savedTheme
-            );
-            updateMetaThemeColor(savedTheme);
-        } else {
-            const prefersDark =
-                window.matchMedia("(prefers-color-scheme: dark)").matches;
-            updateMetaThemeColor(prefersDark ? "dark" : "light");
-        }
+        const savedTheme = localStorage.getItem("portfolio-theme");
+        const initialTheme = (savedTheme === "dark" || savedTheme === "light") ? savedTheme : "dark";
+        root.setAttribute("data-theme", initialTheme);
+        updateMetaThemeColor(initialTheme);
     } catch (error) {}
 
     function toggleTheme() {
-        const current =
-            root.getAttribute("data-theme");
+        const current = root.getAttribute("data-theme") || "dark";
+        const next = current === "dark" ? "light" : "dark";
 
-        const prefersDark =
-            window.matchMedia(
-                "(prefers-color-scheme: dark)"
-            ).matches;
-
-        const isDark =
-            current === "dark" ||
-            (!current && prefersDark);
-
-        const next =
-            isDark ? "light" : "dark";
-
-        root.setAttribute(
-            "data-theme",
-            next
-        );
-
+        root.setAttribute("data-theme", next);
         updateMetaThemeColor(next);
 
         try {
-            localStorage.setItem(
-                "portfolio-theme",
-                next
-            );
+            localStorage.setItem("portfolio-theme", next);
         } catch (error) {}
 
         return next;
@@ -132,6 +100,12 @@
                 }
             }
         );
+
+        document.addEventListener("click", function (event) {
+            if (navLinks && navLinks.classList.contains("open") && !navLinks.contains(event.target) && !menuButton.contains(event.target)) {
+                toggleMenu(false);
+            }
+        });
     }
 
 
@@ -376,8 +350,14 @@
 
             case "resume":
                 outputLine.innerHTML =
-                    '<span class="output green">Opening resume... </span><a href="assets/resume.pdf" target="_blank" rel="noopener">[Click here if it didn\'t open]</a>';
-                window.open("assets/resume.pdf", "_blank");
+                    '<span class="output green">Resume ready: </span><a href="assets/resume.pdf" target="_blank" rel="noopener" style="text-decoration: underline; font-weight: 600;">[Click here to view / download resume.pdf]</a>';
+                try {
+                    const tempA = document.createElement("a");
+                    tempA.href = "assets/resume.pdf";
+                    tempA.target = "_blank";
+                    tempA.rel = "noopener";
+                    tempA.click();
+                } catch(e) {}
                 break;
 
             case "contact":
@@ -397,6 +377,8 @@
             case "clear":
                 const allLines = terminal.querySelectorAll(".terminal-line:not(.terminal-interactive-line)");
                 allLines.forEach(l => l.remove());
+                const inEl = document.getElementById("terminalInput");
+                if (inEl) inEl.focus();
                 return;
 
             case "whoami":
@@ -418,7 +400,7 @@
                 outputLine.innerHTML =
                     '<span class="output" style="color: var(--red);">Command not recognized: "' +
                     escapeHtml(cmd) +
-                    '". Type <span class="green">help</span> to see available commands.</span>';
+                    '". Type <span class="output green">help</span> to see available commands.</span>';
                 break;
         }
 
@@ -452,6 +434,20 @@
         }
 
         enableInteractiveTerminal();
+
+        // Terminal Tab clicks
+        const terminalTabs = document.querySelectorAll(".terminal-tab");
+        terminalTabs.forEach(tab => {
+            tab.addEventListener("click", function() {
+                terminalTabs.forEach(t => t.classList.remove("active"));
+                this.classList.add("active");
+                const termTitle = document.querySelector(".terminal-title");
+                if (termTitle) {
+                    termTitle.textContent = this.textContent.trim() === "bash" ? "bash 5.2 (zsh)" : "Python 3.12 (venv)";
+                }
+            });
+        });
+
     }
 
     function showTerminalInstantly() {
@@ -583,21 +579,23 @@
 
             rafId = requestAnimationFrame(function () {
                 const rect = hero.getBoundingClientRect();
+                const isDark = root.getAttribute("data-theme") !== "light";
+                const glowColor = isDark ? "rgba(99,102,241,.15)" : "rgba(79,70,229,.10)";
                 hero.style.background =
                     "radial-gradient(" +
-                    "420px circle at " +
+                    "440px circle at " +
                     (event.clientX - rect.left) +
                     "px " +
                     (event.clientY - rect.top) +
                     "px, " +
-                    "rgba(255,212,59,.09), " +
+                    glowColor + ", " +
                     "transparent 70%)";
             });
         });
 
         hero.addEventListener("pointerleave", function () {
             if (rafId) cancelAnimationFrame(rafId);
-            hero.style.background = "none";
+            hero.style.background = "";
         });
     }
 
@@ -718,70 +716,188 @@
                 if (res.ok) data = await res.json();
             }
 
-            if (!data || !data.profile) return;
+            if (!data) return;
 
-            const p = data.profile;
+            // 1. Profile Hydration
+            if (data.profile) {
+                const p = data.profile;
 
-            // Name
-            const nameEl = document.querySelector(".hero-content h1");
-            if (nameEl && p.firstName && p.lastName) {
-                nameEl.innerHTML = `${p.firstName} <span class="name-gradient">${p.lastName}</span>`;
+                // Name
+                const nameEl = document.querySelector(".hero-content h1");
+                if (nameEl && p.firstName && p.lastName) {
+                    nameEl.innerHTML = `${escapeHtml(p.firstName)} <span class="name-gradient">${escapeHtml(p.lastName)}</span>`;
+                }
+
+                // Availability
+                const availText = document.querySelector(".availability span:last-child");
+                if (availText && p.availabilityText) {
+                    availText.textContent = p.availabilityText;
+                }
+
+                const availWrap = document.querySelector(".availability");
+                if (availWrap && p.isAvailable === false) {
+                    availWrap.style.display = "none";
+                } else if (availWrap) {
+                    availWrap.style.display = "inline-flex";
+                }
+
+                // Roles
+                const rolesWrap = document.querySelector(".hero-roles");
+                if (rolesWrap && p.roles && p.roles.length) {
+                    rolesWrap.innerHTML = p.roles
+                        .map(r => `<span class="role-pill">${escapeHtml(r)}</span>`)
+                        .join("");
+                }
+
+                // Hero Description
+                const heroDesc = document.querySelector(".hero-description");
+                if (heroDesc && p.heroDescription) {
+                    heroDesc.innerHTML = p.heroDescription;
+                }
+
+                // About Main
+                const aboutMain = document.querySelector(".about-main");
+                if (aboutMain && p.aboutMain) {
+                    aboutMain.innerHTML = p.aboutMain;
+                }
+
+                // About Note
+                const aboutNote = document.querySelector(".about-note");
+                if (aboutNote && p.aboutNote) {
+                    aboutNote.textContent = p.aboutNote;
+                }
+
+                // Email links
+                if (p.email) {
+                    const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+                    emailLinks.forEach(el => {
+                        el.setAttribute("href", `mailto:${p.email}`);
+                        if (el.classList.contains("email")) {
+                            el.textContent = p.email;
+                        }
+                    });
+                }
+
+                // Resume Link
+                if (p.resumeUrl) {
+                    const resumeLinks = document.querySelectorAll('a[href$=".pdf"]');
+                    resumeLinks.forEach(el => el.setAttribute("href", p.resumeUrl));
+                }
             }
 
-            // Availability
-            const availText = document.querySelector(".availability span:last-child");
-            if (availText && p.availabilityText) {
-                availText.textContent = p.availabilityText;
+            // 2. Stats Hydration
+            if (data.stats && Array.isArray(data.stats) && data.stats.length) {
+                const statsWrap = document.querySelector(".stats");
+                if (statsWrap) {
+                    statsWrap.innerHTML = data.stats.map((s, idx) => `
+                        <div class="stat reveal ${idx > 0 ? 'delay-' + idx : ''} visible">
+                            <strong>${escapeHtml(s.value)}</strong>
+                            <span>${escapeHtml(s.label)}</span>
+                        </div>
+                    `).join("");
+                }
             }
 
-            const availWrap = document.querySelector(".availability");
-            if (availWrap && p.isAvailable === false) {
-                availWrap.style.display = "none";
-            } else if (availWrap) {
-                availWrap.style.display = "inline-flex";
+            // 3. Skills Categories Hydration
+            if (data.skillsCategories && Array.isArray(data.skillsCategories) && data.skillsCategories.length) {
+                const skillsWrap = document.querySelector(".skills-category-wrap");
+                if (skillsWrap) {
+                    const catIcons = [
+                        `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`,
+                        `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>`,
+                        `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`,
+                        `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>`
+                    ];
+
+                    skillsWrap.innerHTML = data.skillsCategories.map((cat, idx) => `
+                        <div class="skill-category-card reveal ${idx > 0 ? 'delay-' + (idx % 4) : ''} visible">
+                            <h3>
+                                ${catIcons[idx % catIcons.length]}
+                                ${escapeHtml(cat.name)}
+                            </h3>
+                            <div class="skill-chips">
+                                ${(cat.skills || []).map(sk => `
+                                    <span class="skill-chip">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m10-10h-4M6 12H2"/></svg>
+                                        ${escapeHtml(sk)}
+                                    </span>
+                                `).join("")}
+                            </div>
+                        </div>
+                    `).join("");
+                }
             }
 
-            // Roles
-            const rolesWrap = document.querySelector(".hero-roles");
-            if (rolesWrap && p.roles && p.roles.length) {
-                rolesWrap.innerHTML = p.roles
-                    .map(r => `<span class="role-pill">${r}</span>`)
-                    .join("");
+            // 4. Projects Hydration
+            if (data.projects && Array.isArray(data.projects) && data.projects.length) {
+                const projectGrid = document.querySelector(".project-grid");
+                if (projectGrid) {
+                    projectGrid.innerHTML = data.projects.map((proj, idx) => `
+                        <article class="project-card ${proj.id === 'resume-ai' ? 'resume' : ''} reveal ${idx > 0 ? 'delay-1' : ''} visible">
+                            <div class="project-top project-image-top">
+                                <img src="${escapeHtml(proj.image || 'assets/images/resume_ai_preview.jpg')}"
+                                     alt="${escapeHtml(proj.title)} Preview"
+                                     class="project-img"
+                                     loading="lazy"
+                                     onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22240%22%20viewBox%3D%220%200%20400%20240%22%3E%3Crect%20fill%3D%22%2309111d%22%20width%3D%22400%22%20height%3D%22240%22%2F%3E%3Ctext%20fill%3D%22%236366f1%22%20font-family%3D%22monospace%22%20font-size%3D%2220%22%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%3E${encodeURIComponent(proj.title)}%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                                <div class="project-overlay"></div>
+                                <div class="status ${proj.isLive ? 'live' : ''}">
+                                    <span class="status-dot"></span>
+                                    ${escapeHtml(proj.status || (proj.isLive ? 'Live' : 'In development'))}
+                                </div>
+                            </div>
+                            <div class="project-body">
+                                <span class="project-meta">${escapeHtml(proj.meta || '')}</span>
+                                <h3>${escapeHtml(proj.title)}</h3>
+                                <p>${escapeHtml(proj.description || '')}</p>
+                                ${proj.highlights && proj.highlights.length ? `
+                                    <ul class="project-highlights">
+                                        ${proj.highlights.map(h => `<li>${escapeHtml(h)}</li>`).join("")}
+                                    </ul>
+                                ` : ''}
+                                ${proj.tags && proj.tags.length ? `
+                                    <ul class="project-tags">
+                                        ${proj.tags.map(t => `<li>${escapeHtml(t)}</li>`).join("")}
+                                    </ul>
+                                ` : ''}
+                                <div class="project-actions">
+                                    ${proj.liveUrl ? `
+                                        <a class="button button-primary" href="${escapeHtml(proj.liveUrl)}" target="_blank" rel="noopener" aria-label="View live demo of ${escapeHtml(proj.title)}">
+                                            Live Demo
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M7 17 17 7"/>
+                                                <path d="M7 7h10v10"/>
+                                            </svg>
+                                        </a>
+                                    ` : ''}
+                                    ${proj.githubUrl ? `
+                                        <a class="button button-secondary" href="${escapeHtml(proj.githubUrl)}" target="_blank" rel="noopener" aria-label="View ${escapeHtml(proj.title)} on GitHub">
+                                            GitHub Code
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M7 17 17 7"/>
+                                                <path d="M7 7h10v10"/>
+                                            </svg>
+                                        </a>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </article>
+                    `).join("");
+                }
             }
 
-            // Hero Description
-            const heroDesc = document.querySelector(".hero-description");
-            if (heroDesc && p.heroDescription) {
-                heroDesc.innerHTML = p.heroDescription;
-            }
-
-            // About Main
-            const aboutMain = document.querySelector(".about-main");
-            if (aboutMain && p.aboutMain) {
-                aboutMain.innerHTML = p.aboutMain;
-            }
-
-            // About Note
-            const aboutNote = document.querySelector(".about-note");
-            if (aboutNote && p.aboutNote) {
-                aboutNote.textContent = p.aboutNote;
-            }
-
-            // Email links
-            if (p.email) {
-                const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
-                emailLinks.forEach(el => {
-                    el.setAttribute("href", `mailto:${p.email}`);
-                    if (el.classList.contains("email")) {
-                        el.textContent = p.email;
-                    }
-                });
-            }
-
-            // Resume Link
-            if (p.resumeUrl) {
-                const resumeLinks = document.querySelectorAll('a[href$=".pdf"]');
-                resumeLinks.forEach(el => el.setAttribute("href", p.resumeUrl));
+            // 5. Education Hydration
+            if (data.education && Array.isArray(data.education) && data.education.length) {
+                const timeline = document.querySelector(".timeline");
+                if (timeline) {
+                    timeline.innerHTML = data.education.map(edu => `
+                        <div class="timeline-item reveal visible">
+                            <span class="timeline-date">${escapeHtml(edu.date || '')}</span>
+                            <h3>${escapeHtml(edu.degree || '')}</h3>
+                            <p>${escapeHtml(edu.description || '')}</p>
+                        </div>
+                    `).join("");
+                }
             }
 
         } catch (err) {
