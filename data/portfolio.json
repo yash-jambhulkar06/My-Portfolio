@@ -2,8 +2,8 @@
   "profile": {
     "firstName": "Yash Dhanraj",
     "lastName": "Jambhulkar",
-    "availabilityText": "Available for Internships & Projects",
-    "isAvailable": true,
+    "availabilityText": "",
+    "isAvailable": false,
     "roles": [
       "Full Stack Python",
       "Django Specialist",
