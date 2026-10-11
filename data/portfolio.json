@@ -2,8 +2,8 @@
   "profile": {
     "firstName": "Yash Dhanraj",
     "lastName": "Jambhulkar",
-    "availabilityText": "",
-    "isAvailable": false,
+    "availabilityText": "Consistency Today , Impact Tommarow",
+    "isAvailable": true,
     "roles": [
       "Full Stack Python",
       "Django Specialist",
@@ -118,6 +118,24 @@
       ],
       "liveUrl": "https://resumeai-zwez.onrender.com",
       "githubUrl": "https://github.com/yash-jambhulkar06"
+    },
+    {
+      "id": "free-food",
+      "title": "FREE FOOD",
+      "meta": "Web Application and PWA",
+      "status": "Live",
+      "isLive": true,
+      "image": "",
+      "description": "It is free food community site. Where community members can submit the event a where food is serving.",
+      "highlights": [],
+      "tags": [
+        "Python",
+        "Django",
+        "TiDB",
+        "PWA"
+      ],
+      "liveUrl": "free-food-com.vercel.app",
+      "githubUrl": "https://github.com/dona"
     }
   ],
   "education": [
